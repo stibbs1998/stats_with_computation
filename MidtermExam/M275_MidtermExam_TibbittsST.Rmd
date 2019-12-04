@@ -1,0 +1,123 @@
+---
+title: "Spencer Tibbitts"
+author: "Math 275"
+date: "October 23, 2019"
+output:
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+
+# ```{r setup, include=FALSE}
+# knitr::opts_chunk$set(echo = TRUE)
+# ```
+
+#```{r, echo=F}
+
+#```
+---
+
+```{r load_libraries, include=F}
+library(faraway)
+library(lattice)
+library(dplyr)
+library(ggplot2)
+```
+
+## Introduction to the DataSet
+
+The prostate DataFrame contains data on a study of 97 men with prostate cancer who were due to receive a radical prostatectomy.  The first five patients of data are included here.
+
+```{r, echo=F}
+data(prostate)
+head(prostate)
+# ? prostate
+
+# The following is commented out to reduce overflow of numbers on output
+
+# We can create a summary of each variable in the DataFrame as well.
+# ```{r, echo=F}
+# summary(prostate)
+
+```
+
+All of the variables are of numeric type.  While many of the columns are type *float*, the **age** and **svi** (Seminal Vesicle Invasion) columns are integer type as shown here.
+
+```{r, echo=T}
+typeof(prostate$svi)
+```
+The **svi** column uses 0's and 1's to represent **No** and **Yes** responses.
+
+```{r, include=F}
+write.csv(prostate,"~/Downloads/newprostatedata.csv",row.names=F)
+newpros<-read.csv("~/Downloads/newprostatedata.csv")
+```
+
+## Seminal Vescile Invasion
+
+Invasion of the muscular wall of seminal vesicles by prostate cancer is a marker of a poor prognosis at the time of pathologic staging after radical prostatectomy.  The knowlege of their presence is very important for prognosis as those with SVI have a higher risk of lymph node metastasis and tumor recurrence.
+
+As stated in the previous section, while the variable **svi** is numeric, it actually conveys categorical data, which results in this strange summary distribution.
+```{r, echo=F}
+summary(newpros$svi)
+typeof(newpros$svi)
+```
+By making this variable categorical, we can obtain a much more useful summary of the data.
+```{r, echo=F}
+newpros <- newpros %>%
+ mutate(svi=factor(svi,levels = c("1", "0"),labels = c("yes", "no")))
+summary(newpros$svi)
+```
+### Gleason Score
+The Gleason Score is an indicator for how likely the cancerous cells are to grow rapidly.  The lower the score, the slower they grow and they look more like normal cells.  The score ranges from 6-10.  By using the following chunk of code, we can caluclate how many patients have a Gleason Score of 6:
+
+```{r,include=T}
+score <- 6;
+num_score <- sum(newpros$gleason==6)
+```
+There are 
+`r toString(num_score)`
+patients with a Gleason Score of 
+`r toString(score)`
+.
+
+### The Affect of SVI on PSA
+We want to see if there is a coorelation between having SVI, and the patients associated ***lpsa*** score - the score associated with the log of the prostate specific antigen.  Below are two plots used to highlight this relationship.
+
+```{r, echo=F, fig.show="hold",out.width="80%",out.height="50%"}
+# Change box plot colors by groups
+p1 <- ggplot(newpros, aes(x=svi, y=lpsa, fill=svi)) +
+  geom_boxplot()
+
+
+p2 <- ggplot(newpros, aes(x=lpsa)) + 
+    geom_histogram(aes(y=..density..,fill=svi), alpha=0.7,bins=10) +      # Histogram with density instead of count on y-axis
+    stat_density(geom="line",aes(colour=svi),alpha=1)  + # Overlay with transparent density plot
+  scale_color_manual(values=c("red","blue")) + 
+ylab("Frequency (%)") + 
+xlab("Log(psa)")
+
+p1
+p2
+```
+
+```{r, include=F}
+summary_yes_svi <- summary(subset(newpros,svi=="yes")$lpsa)
+summary_no_svi <- summary(subset(newpros,svi=="no")$lpsa)
+```
+
+
+Those who have SVI have the following summary associated with their lpsa values 
+
+```{r}
+summary_yes_svi
+```
+
+as opposed to those who do not have SVI
+
+```{r}
+summary_no_svi
+```
+
+Those who have SVI have an average lpsa value of 3.7, compared to a mean lpsa of 2.1 for those who don't.  From the boxplot it can be seen that the Interquartile ranges for each category do not even overlap, and there is a significant difference between those who do and do not have SVI.  As shown in the density histogram, those with SVI are much more likely to have a lpsa value higher than 3 than those who do not.  Very clearly, we can see that the status of having SVI has a huge impact on the patients' lpsa scores.

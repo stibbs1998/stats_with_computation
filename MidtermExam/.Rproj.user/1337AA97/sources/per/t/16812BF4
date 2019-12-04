@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1571853255121.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "448213050",
+    "id" : "16812BF4",
+    "lastKnownWriteTime" : 1571887998,
+    "last_content_update" : 1571887998896,
+    "path" : "~/MidtermExam/M275_MidtermExam_TibbittsST.Rmd",
+    "project_path" : "M275_MidtermExam_TibbittsST.Rmd",
+    "properties" : {
+        "cursorPosition" : "122,189",
+        "scrollLine" : "81",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
