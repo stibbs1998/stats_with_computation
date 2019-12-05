@@ -1,0 +1,113 @@
+---
+title: "Homework 5"
+author: "Spencer Tibbitts"
+date: "10/22/2019"
+output:
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T)
+```
+
+## Example of Sampling Distribution
+```{r load_height, include=F}
+### Example
+# a)
+hgt<-read.csv("../Downloads/SienaMath-height.csv")
+x_bar<-mean(hgt$height)
+sd_hgth<-sd(hgt$height)
+```
+
+We have imported data provided on the height of the 34 Siena Math Majors.  From the data we can see that $\bar{x}\pm\sigma \to$ 
+`r x_bar` 
+$\pm$ 
+`r sd_hgth`. 
+
+
+Suppose we took a random sample of 3 people from the data, and wanted to compute the mean. 
+```{r,include=T}
+s<-sample(hgt$height,3)
+mean(s)
+```
+
+Now let's do the same thing for 10 samples of 3 people at once.
+```{r,include=T}
+MeanXbar<-numeric(10)
+for (i in 1:10){
+  smp<-sample(hgt$height,3);
+  MeanXbar[i]<-mean(smp)}
+mean(MeanXbar)
+```
+
+Now lets do this with 100 samples, and plot the distribution of means as a histogram.
+```{r part-d, echo=T}
+MeanXbar=numeric(100)
+for (i in 1:100){
+  smp=sample(hgt$height,3);
+  MeanXbar[i]=mean(smp)}
+hist(MeanXbar,col="orange", xlab="Mean of Samples",main="")
+```
+
+From this random simulation, we found the mean and standard deviation of the sample means to be the following.
+```{r, echo=T}
+mean(MeanXbar)
+sd(MeanXbar)
+```
+These results should be compared to the known values of $\mu$ and $\frac{\sigma}{\sqrt{n}}$ below.
+```{r,echo=T}
+mean(hgt$height)
+sd(hgt$height)/sqrt(3)
+```
+
+There are $\frac{34!}{31!(3!)}=5984$ possible unique samples of size 3.  Let's select this many samples from the dataset and repeat the previous example.
+```{r example-e, echo=T}
+MeanXbar=numeric(5984)
+for (i in 1:5984){
+  smp=sample(hgt$height,3);
+  MeanXbar[i]=mean(smp)}
+hist(MeanXbar,col="green", xlab="Mean of Samples",main="")
+mean(MeanXbar)
+mean(hgt$height)
+sd(MeanXbar)
+sd(hgt$height)/sqrt(3)
+```
+
+## Three Simulations of the Sample Mean
+
+Now let's run 3 more simulations, this time on the \it{Uniform}(0,1) distribution: first with a sample size of 1, then a sample size of 30, then a sample size of 1000.  It will become apparent that the greater the sample size, the more accurate a measurement of the mean is.
+```{r example2, include=F}
+xbar=numeric(1000)
+for (i in 1:1000){
+  x=runif(n=1,min=0,max=1);
+  xbar[i]=mean(x)}
+hist(xbar,col="yellow",main="sample size=1",xlab="sample mean Xbar")
+mean(xbar)
+sd(xbar)
+```
+
+```{r example2-b, include=F}
+xbar2=numeric(1000)
+for (i in 1:1000){
+  x=runif(n=30,min=0,max=1);xbar2[i]=mean(x)}
+hist(xbar2,col="red",main="sample size=30",xlab="sample mean Xbar")
+mean(xbar2)
+sd(xbar2)
+xbar3=numeric(1000)
+for (i in 1:1000){
+  x=runif(n=1000,min=0,max=1);
+  xbar3[i]=mean(x)}
+hist(xbar3,col="green",main="sample size=1000",xlab="sample mean Xbar")
+mean(xbar3)
+sd(xbar3)
+```
+
+```{r,echo=T}
+hist(xbar,col="yellow",main="sample size=1",xlab="sample mean Xbar")
+hist(xbar2,col="red",main="sample size=30",xlab="sample mean Xbar")
+hist(xbar3,col="green",main="sample size=1000",xlab="sample mean Xbar")
+```
