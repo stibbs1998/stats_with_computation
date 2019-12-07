@@ -15,19 +15,19 @@ knitr::opts_chunk$set(echo = TRUE)
 *(b) getting a sum of 5?*
 *(c) getting a sum of 12?*
 
-a) 0% chance of rolling a sum of 1 with two dice - the only possible results are from 2-12.
+a) There is a 0% chance of rolling a sum of 1 with two dice - the only possible results are from 2-12.
 
-b) There are 36 possible combinations for 2 dice.  A five can be rolled with the following pairs - (1,4), (4,1), (2,3), (3,2)
+b) There are 36 possible combinations for 2 dice.  A total of five can be rolled with the following pairs - (1,4), (4,1), (2,3), (3,2).
 Therefore the probability of rolling a 5 is $\frac{4}{36} \to \frac{1}{9}$
 
-c) There is only one possible combination to roll a 12 with - (6,6), therefore the probability is $\frac{1}{36}$
+c) There is only one possible combination to roll a 12 with - (6,6), therefore the probability is $\frac{1}{36}$.
 
 ### 3.9
 #### In parts (a) and (b), identify whether the events are disjoint, independent, or neither (events cannot be both disjoint and independent).
 
-(a) *You and a randomly selected student from your class both earn A’s in this course.* 
+(a) *You and a randomly selected student from your class both earn A's in this course.* 
 **Independent**
-(b) *You and your class study partner both earn A’s in this course.*
+(b) *You and your class study partner both earn A's in this course.*
 **Neither**
 (c) *If two events can occur at the same time, must they be dependent?*
 **No**.  Say for instance, two car crashes occur at the same time of day - one in NYC and the other in Hong Kong.  Clearly, the two events are not related, therefore they are not dependent on one another.
@@ -43,9 +43,9 @@ No - the two definitely have some sort of relationship with one another.
 $23.29\%$
 
 *(c) What is the probability that a randomly chosen individual has excellent health given that he has health coverage?*
-$20.99%$
+$20.99\%$
 
-*(d) What is the probability that a randomly chosen individual has excellent health given that he doesn’t have health coverage?*
+*(d) What is the probability that a randomly chosen individual has excellent health given that he doesn't have health coverage?*
 $2.3\%$
 
 *(e) Do having excellent health and having health coverage appear to be independent?*
@@ -55,6 +55,7 @@ While you can be in excellent health and not have health coverage, there is a re
 #### A genetic test is used to determine if people have a predisposition for thrombosis, which is the formation of a blood clot inside a blood vessel that obstructs the flow of blood through the circulatory system. It is believed that 3% of people actually have this predisposition. The genetic test is 99% accurate if a person actually has the predisposition, meaning that the probability of a positive test result when a person actually has the predisposition is 0.99. The test is 98% accurate if a person does not have the predisposition. What is the probability that a randomly selected person who tests positive for the predisposition by the test actually has the predisposition?
 
 The number of people who test positive are:
+
 ```{r, include=TRUE}
 false_positive = 97*0.02
 positive = 3*0.99
@@ -62,7 +63,7 @@ positive/(false_positive+positive)
 ```
 
 ### 3.30
-#### Consider the following card game with a well-shuffled deck of cards. If you draw a red card, you win nothing. If you get a spade, you win $5. For any club, you win $10 plus an extra $20 for the ace of clubs.
+#### Consider the following card game with a well-shuffled deck of cards. If you draw a red card, you win nothing. If you get a spade, you win \$5. For any club, you win \$10 plus an extra \$20 for the ace of clubs.
 
 *(a) Create a probability model for the amount you win at this game. Also, find the expected winnings for a single game and the standard deviation of the winnings.*
 P(\$0) = $\frac{1}{2}$
@@ -70,10 +71,11 @@ P(\$5) = $\frac{1}{4}$
 P(\$10) = $\frac{3}{13}$
 P(\$30) = $\frac{1}{52}$
 
-```{r, include=TRUE}
+```{r, echo=TRUE}
 odds <- c(0.5,0.25,3/13,1/52)
 results <- c(0,5,10,30)
-samp <- sample(results,size=10000,replace=T,prob=odds)
+N = 10000
+samp <- sample(results,size=N,replace=T,prob=odds)
 mean(samp)
 ```
 
@@ -85,12 +87,16 @@ At max, I'd be willing to bet \$3 because by the expected winnings of the game, 
 #### The relative frequency table below displays the distribution of annual total personal income (in 2009 inflation-adjusted dollars) for a representative sample of 96,420,486 Americans. These data come from the American Community Survey for 2005-2009. This sample is comprised of 59% males and 41% females
 
 *(a) Describe the distribution of total personal income.*
+
 This distribution seems to be mostly normal with a longer right tail.
-*(b) What is the probability that a randomly chosen US resident makes less than $50,000 per year?* 
+
+*(b) What is the probability that a randomly chosen US resident makes less than \$50,000 per year?* 
+
 ```{r, include=T}
 .212+.183+.158+.047+.022
 ```
-*(c) What is the probability that a randomly chosen US resident makes less than $50,000 per year and is female? Note any assumptions you make. *
+
+* (c) What is the probability that a randomly chosen US resident makes less than \$50,000 per year and is female? Note any assumptions you make. *
 Assuming that there is no wage-gap and men and women are both paid equally in this survey, then this would be 
 ```{r, include=T}
 0.622*0.41

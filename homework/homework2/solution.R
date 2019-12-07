@@ -1,14 +1,16 @@
 # Spencer Tibbitts
 # Created: 09/19/19
-# Updated: 09/19/19
+# Updated: 12/07/19
+#----------------------#
+
 
 # Import DataFrame
-# source("http://www.openintro.org/stat/data/cdc.R")
+source("http://www.openintro.org/stat/data/cdc.R")
 
 # View Names of Data
 names(cdc)
 
-#####
+#----------------------#
 # 1.) How many cases are there in this data set? 
 # How many variables? 9
 # For each variable, identify its data type (e.g. categorical, discrete).
@@ -22,6 +24,7 @@ names(cdc)
 # wtdesire -> numerical (discrete)
 # age -> numerical (discrete)
 # gender -> categorical (nominal)
+#----------------------#
 
 # View some of the dataset
 head(cdc)
@@ -30,22 +33,22 @@ tail(cdc)
 # Return Numerical Summary
 summary(cdc$weight)
 
-# Find the IQR
+# Find the IQR.  From the summary command above, we see that Q3=190 and Q1=140.
 190-140
 
-# Use built in statistical functions
+# Get familiar with built in statistical functions.
 mean(cdc$weight)
 var(cdc$weight)
 median(cdc$weight)
 
 # Return table with summary statistics for categorical data
-smoke <- table(cdc$smoke100)
+smoke <- table(cdc$smoke100) # 20000 entries
 table(cdc$smoke100)/20000 # relative frequency
 
 # Create a barplot for the first table
 barplot(smoke)
 
-####
+#----------------------#
 # 2. Create a numerical summary for height and age, 
 # and compute the interquartile range for each. Compute
 # the relative frequency distribution for gender and exerany. 
