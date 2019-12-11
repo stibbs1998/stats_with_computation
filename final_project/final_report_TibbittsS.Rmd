@@ -14,7 +14,11 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 library(reticulate)
 library(knitr)
-use_python("/Users/ktosun/opt/anaconda3/bin/python")
+use_python("PATH/TO/PYTHON")
+image_path <- "images/"
+data_path <- "data/"
+figure_path <- "figures/"
+
 #py_install("pandas")
 ```
 
@@ -22,20 +26,20 @@ use_python("/Users/ktosun/opt/anaconda3/bin/python")
 
 Data Science is one of the most sought after set of skills right now, and is only getting more and more popular.  According to IBM, the number of jobs for all US Data Professionals will increase to 2,720,000, and the average pay for Data Scientists and Data Engineers is over $100,000.[^1] It is easy to see why many colleges are starting to build programs specifically for Data Science  - such as Siena! - in order to prepare students for this field more effectively.  Skills like machine learning, data visualization, and statistics are extremely in demand, and won't be going away anytime soon, so learning how to program and use these skills is highly valuable.  
 
-![Data from the [2018 Kaggle Machine Learning and Data Science Survey](http://www.kaggle.com/kaggle/kaggle-survey-2018)](most_popular_data_science.png)
+![Data from the [2018 Kaggle Machine Learning and Data Science Survey](http://www.kaggle.com/kaggle/kaggle-survey-2018)](images/most_popular_data_science.png)
 
 As shown in the image above, **Python** and **R** are two of the most used programming languages in the Data Science community - ranked first and third respecitively in popularity.  However, depending on where/how students learn to program, they may experience overexposure to one or the other, and not have as widely available of a skill set.  This has been my personal experience at Siena - while I've had much experience using Python, I've had very little using R.
 
 ## R
 ```{r  out.width = "20%",echo=F}
-include_graphics("Rlogo.png") 
+include_graphics(paste(image_path,sep='',"Rlogo.png")) 
 ```
 
 Released in August of 1993, R quickly became one of the most used programming languages for statisticians due to its simplicity, wide array of statistical functions, and open-source availability.  Another one of its perks is how easy it is to load in datasets to R to visualize and quantify data.  The barebones of R (RBase) contains much of these statistical functions, as well as some basic plotting functions.  Using packages such as **ggplot2** to enhance visualizations  brings out the best in R.  
 
 ### RStudio
 ```{r  out.width = "20%",echo=F}
-include_graphics("rstudio_logo.png") 
+include_graphics(paste(image_path, sep='', "rstudio_logo.png")) 
 ```
 
 The most popular IDE for R is RStudio.  RStudio is equipped with a space for editing scripts, a console for running single lines of code, area to display plots and help, a workspace for created variables, and much more.  While RStudio has a free version, there are premium versions available to the general public, as well as commerical liscensing.  RStudio is also used for **RMarkdown** files, which we will talk more about later on.
@@ -43,19 +47,64 @@ The most popular IDE for R is RStudio.  RStudio is equipped with a space for edi
 ## Python
 
 ```{r  out.width = "20%",echo=F}
-include_graphics("python_logo.png") 
+include_graphics(paste(image_path, sep='', "python_logo.png")) 
 ```
 
 Released in 1991, Python is a general purpose, object-oriented language.  Python is noted as being one of the easiest languages to learn for newcomers to programming due to its high level of readability.  In recent years, Python has experienced an explosion in its use, especially in Data Science, due to its vast number of libraries, great documentation, and the increasingly large community of people who use Python.  As of the time this was written, Python has become the second most popular programming language amongst **all** programmers, even those who aren't Data Scientists, meaning Python is even more valuable to have as a skill.
 
 ### Juptyer and Google Colab
 ```{r  out.width = "20%",echo=F}
-include_graphics(c("jupyter_logo.png","colab_logo.png")) 
+include_graphics(paste(image_path, sep='', c("jupyter_logo.png","colab_logo.png")))
 ```
 
 Similar to RStudio for R users, Jupyter Notebook - and more recently Jupyter-Lab - are the most popular IDEs for Python users.  These programs create an **IPython Notebook**, which can contain chunks of Python code, plots, and markdown text.  Recently, Google has been working to make Jupyter Notebooks accessible via Google Drive, a project known as **Google Colab**.  These notebooks can be shared the same way a Google Document can be shared with multiple users.  They are able to access data files from Google Drive, as well as locally stored files, can be pushed/pulled from Github just like regular Jupyter Notebooks are, and run just as fast as regular Jupyter Notebooks!.  This cloud accessibility, along with the number of tutorials and code snippets on Google Colab make it one of the best Data Science tools available.
 
 # Why Choose? Can't We Have Both?
+```{r  out.width = "20%",echo=F}
+include_graphics(paste(image_path, sep='', "reticulated_python.png"))
+```
+
+Both Python and R offer packages to support this integration, but R's integration is much better, and is the one we will focus on.  Using the package **reticulate**, we can easily integrate Python code with R using Rmarkdown files (.Rmd).  
+
+## Installation
+
+1. The following software needs to be installed in order to use ***reticulate***.
+
+* Python (3.7 or higher recommended)
+  + [Using Anaconda](https://docs.anaconda.com/anaconda/install/)
+  + [Without Anaconda](https://realpython.com/installing-python/)
+* [R](https://cran.cnr.berkeley.edu/) (3.6.1 recommended)
+* [RStudio](https://rstudio.com/products/rstudio/#rstudio-desktop)
+
+2. From the *Console* on RStudio, run the following command to install **reticulate**.
+
+```{r, eval=F}
+install.packages("reticulate")
+```
+
+## How to Use
+
+The first step is to link the .Rmd file to the location where Python is installed.
+
+If you don't know the path which Python is installed under, do the following:
+
+* Open the Python shell.
+* Run the following commands in the shell, and the location will be displayed.
+
+```{python, eval=F}
+import os
+import sys
+os.path.dirname(sys.executable)
+```
+
+From there, run the following chunk of code in the .Rmd file.
+
+```{r, eval=F}
+library(reticulate)
+use_python("PATH/TO/PYTHON")
+```
+
+And now you can run Python code in an RMarkdown file!  When including code chunks, instead of 
 
 <!--Footnotes-->
 [^1]: [Forbes: "IBM Predicts Demand For Data Scientists Will Soar 28% By 2020"](https://www.forbes.com/sites/louiscolumbus/2017/05/13/ibm-predicts-demand-for-data-scientists-will-soar-28-by-2020/#2262aec17e3b)
